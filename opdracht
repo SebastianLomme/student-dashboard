@@ -1,0 +1,53 @@
+<----- Start project ---->
+
+- react app opzetten
+- redux opzetten voor een initail state
+- gegevens ophalen via csv bestand
+- data structuur opzetten
+- bootstrap opzetten
+
+
+<---- requirements ---->
+
+Home page moet een dashboard zijn met een overview van een staafdiagram met de evaluaties (leuk & moeilijk) van alle studenten
+1 een oogopslag onderscheid kunnen zien tussen de leuk en moeilijk evaluatie 
+
+
+Een menu maken met alle studenten namen. hier moet een link aan gehangen worden met een routing
+De staafdiagram past zich aan met alleen de data van de student. 
+
+
+Door een checkbox keuze laten maken tussen alleen de data voor leuk of moeilijk of bijde
+
+Bij elke student een checkbox met wanneer deze is aangevinkt wordt de student meegenomen in de data chart
+en wanner deze uitgevinkt is wordt de student niet meegenomen.
+
+line chart met het gemiddelde cjifer voor leuk en moeilijk voor alle opdrachten.
+
+ik wil kunnen zien in een staafdiagram hoe een opdracht het heeft gedaan. 
+
+
+<----- Bonus ----->
+
+Zorg dat de dat op meer dan 1 manier kan slicen en dicen 
+
+Maak 1 tabel overzicht van alle data 
+zorg dat je de tabel kan 
+sorteren per data kolom
+
+gebruiker profielen maken
+ - Achternaam
+ - Leeftijd 
+ - Telefoonnummer 
+ - Email adres
+ - Photo (url)
+
+Redux gebruiken voor het bijhouden van de state 
+
+Sorteren van de bar charts van de opdrachten
+
+Sorteren van de bar charts op gemiddelde cijfers
+
+
+
+
