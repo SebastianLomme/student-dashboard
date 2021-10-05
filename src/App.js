@@ -1,26 +1,29 @@
 import React from 'react';
-import './App.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { setData } from './redux/action';
 import { useEffect } from 'react';
 import { csv } from "d3";
 import studentData from "./student-dashboard-data.csv";
-
+import Header  from './components/Header';
+import Nav from "./components/Nav";
+import GrafBar from './components/GrafBar';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.reducer.isLoading)
-  console.log(loading)
-
+  const data = useSelector(state => state.reducer)
   useEffect(() => {
-
     csv(studentData).then(data => dispatch(setData(data)))
   }, [dispatch])
-  
+
+  console.log(data)
 
   return (
     <div className="App">
-      { loading ? <h1>...Loading</h1> : <h1>Hello World!</h1> }
+      <Header />
+      <Nav />
+      <GrafBar data={ data }/>
+
     </div>
   );
 }
