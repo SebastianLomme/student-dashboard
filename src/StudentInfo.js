@@ -9,7 +9,7 @@ function StudentInfo(props) {
     const filterData = data.filter(student => student.Naam === name)
     console.log(filterData)
     return (
-        <div className="container">
+        <div className="container bg-light">
             <h1>{name}</h1>
             <GrafBar data={filterData} />
         </div>

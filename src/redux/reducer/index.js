@@ -42,7 +42,8 @@ export default function dataReducer(state = initialState, action) {
                 const object = {
                     Opdracht: item,
                     Moeilijk: getAvverage(action.payload, item, "Moeilijk"),
-                    Leuk: getAvverage(action.payload, item, "Leuk")
+                    Leuk: getAvverage(action.payload, item, "Leuk"),
+                    IsFilter: true,
                 }
                 AvverageArray.push(object)
             })
@@ -55,7 +56,7 @@ export default function dataReducer(state = initialState, action) {
                     Opdracht: item.Opdracht,
                     Moeilijk: parseInt(item.Moeilijk),
                     Leuk: parseInt(item.Leuk),
-                    IsFilter: false,
+                    IsFilter: true,
                 }
                 dataArray.push(object)
             })
@@ -67,9 +68,39 @@ export default function dataReducer(state = initialState, action) {
                 isLoading: false,
             }
         case "FILTER_DATA":
-            console.log("Filter")
+            console.log("Data: ", state.data)
+            console.log("action.payload: ", action.payload[0])
+            console.log("action.payload: ", action.payload[1])
+            const newArray = []
+            state.assigments.forEach(item => {
+                if (item[action.payload[1]] === action.payload[0]) {
+                    const object = {
+                        ...item,
+                        IsFilter: !item.IsFilter,
+                    }
+                    newArray.push(object)
+                } else {
+                    newArray.push(item)
+                }
+            })
+            const newDataArray = []
+            state.data.forEach(item => {
+                if (item[action.payload[1]] === action.payload[0]) {
+                    const object = {
+                        ...item,
+                        IsFilter: !item.IsFilter
+                    }
+                    newDataArray.push(object)
+                } else {
+                    newDataArray.push(item)
+                }
+
+            })
             return {
-                ...state
+                ...state,
+                assigments: newArray,
+                data: newDataArray,
+
             }
         default: {
             return state;
