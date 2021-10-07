@@ -11,7 +11,7 @@ function Home() {
 
     console.log(assigments)
     const handleChange = (e) => {
-        const {id} = e.target
+        const { id } = e.target
         setChecked({
             ...checked,
             [id]: !checked[id]
@@ -39,24 +39,7 @@ function Home() {
         <div className="container">
             {assigmentsSwitch}
         </div>
-
-=======
-import React from 'react';
-import GrafBar from './GrafBar';
-import { useSelector } from 'react-redux'
-
-function Home() {
-    const data = useSelector(state => state.reducer.assigments)
-
-    return (
-        <div className="container">
-            <h1>Home</h1>
-            <GrafBar data={data} />
-
-        </div>
     )
-
 }
-
 
 export default Home
