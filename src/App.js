@@ -6,25 +6,40 @@ import { csv } from "d3";
 import studentData from "./student-dashboard-data.csv";
 import Header  from './components/Header';
 import Nav from "./components/Nav";
+import Home from './components/Home';
 import GrafBar from './components/GrafBar';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+
+} from "react-router-dom";
+import StudentInfo from './StudentInfo';
+
 
 function App() {
   const dispatch = useDispatch()
-  const data = useSelector(state => state.reducer)
+  const data = useSelector(state => state.reducer.assigments)
   useEffect(() => {
     csv(studentData).then(data => dispatch(setData(data)))
   }, [dispatch])
-
-  console.log(data)
-
+  
   return (
-    <div className="App">
-      <Header />
-      <Nav />
-      <GrafBar data={ data }/>
-
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Nav />
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/grafiek">
+            <GrafBar data={data} />
+          </Route>
+          <Route path="/student/:name/" component={StudentInfo} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -11953,5 +11953,11 @@ fieldset:disabled .btn {
 
 .chart {
   padding: 10px;
+  max-width: 900px;
+}
+
+.dropdown-scroll {
+  max-height: 280px;
+  overflow-y: auto;
 }
 /*# sourceMappingURL=style.css.map */

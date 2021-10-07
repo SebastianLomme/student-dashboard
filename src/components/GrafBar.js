@@ -1,42 +1,86 @@
 import React from 'react';
-import {  VictoryBar, VictoryChart, VictoryAxis } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiContainer, VictoryTooltip } from 'victory';
 
 function GrafBar(props) {
-    console.log("Props: ", props.data.assigments)
+    console.log("Propsdata: ", props.data)
+    const getNumber = (props) => 300 / (props.data.length * 2)
+    const number = getNumber(props)
     return (
         <div className="chart">
+
             <VictoryChart
-                domainPadding={{ x: [10, -10], y: 5 }}
-                groupComponent={<g transform="translate(10, 10)" />}
+                containerComponent={
+                    <VictoryVoronoiContainer
+                        height={400}
+                    />
+                }
+
             >
-                <VictoryBar
-                    horizontal={true}
-                    barWidth={({ index }) => index * 2 + 5}
-                    data={props.data.assigments}
-                    x="Opdracht"
-                    y="Moeilijk"
-                />
+
+                <VictoryGroup
+                    offset={number}
+                    colorScale={["gray", "blue"]}
+                    animate={{
+                        duration: 2000,
+                        onLoad: { duration: 1000 }
+                    }}
+                >
+
+                    <VictoryBar
+                        // barWidth={2}
+                        labelComponent={<VictoryTooltip />}
+                        labels={props.data.map(avg => {
+                            return `Moeilijkheid: ${ avg.Moeilijk } Leuk: ${avg.Leuk}`
+                        })}
+                        
+                        barWidth={number}
+                        padding={20}
+                        tickValues={[1, 2, 3, 4, 5]}
+                        tickFormat={props.data.map(avg => avg.Opdracht)}
+                        alignment="start"
+                        data={props.data}
+                        x="Opdracht"
+                        y="Moeilijk"
+                    />
+                    <VictoryBar
+                        // barWidth={2}
+                        labelComponent={<VictoryTooltip />}
+                        labels={props.data.map(avg => {
+                            return `Moeilijkheid: ${ avg.Moeilijk } Leuk: ${avg.Leuk}`
+                        })}
+                        
+                        barWidth={number}
+                        padding={20}
+                        tickValues={[1, 2, 3, 4, 5]}
+                        tickFormat={props.data.map(avg => avg.Opdracht)}
+                        alignment="start"
+                        data={props.data}
+                        x="Opdracht"
+                        y="Leuk"
+                    />
+
+                </VictoryGroup>
 
                 <VictoryAxis
-                    // tickValues specifies both the number of ticks and where
-                    // they are placed on the axis
-                    tickFormat={ props.data.assigments.Opdracht}
-                    style={{
-                        tickLabels: { angle: 45, textAnchor: 'start', fontSize: 6 },
-                        ticks: { stroke: "grey", size: 5 }
-                    }}
-                />
-                <VictoryAxis
-                    dependentAxis
-                    // tickFormat specifies how ticks should be displayed
-                    tickFormat={[1, 2, 3, 4, 5]}
-                    style={{
-                        tickLabels: { fontSize: 10 },
-                        ticks: { stroke: "grey", size: 5 }
-                    }}
-                />
+                        tickFormat={props.data.map(avg => avg.Opdracht)}
+                        style={{
+                            tickLabels: { angle: 90, textAnchor: 'start', fontSize: 6 },
+                            ticks: { stroke: "grey", size: 2 },
+                        }}
+                    />
+
+                    <VictoryAxis
+                        dependentAxis
+                        tickFormat={[1, 2, 3, 4, 5]}
+                        tickValues={[1, 2, 3, 4, 5]}
+                        style={{
+                            tickLabels: { fontSize: 10 },
+                            ticks: { stroke: "grey", size: 5 }
+                        }}
+                    />
 
             </VictoryChart>
+
         </div>
     )
 }
