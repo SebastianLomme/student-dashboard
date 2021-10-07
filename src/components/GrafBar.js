@@ -3,7 +3,7 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiCont
 
 function GrafBar(props) {
     console.log("Propsdata: ", props.data)
-    const getNumber = (props) => 300 / (props.data.length * 2)
+    const getNumber = (props) => 300 / (props.data.slice(0, 10).length * 2)
     const number = getNumber(props)
     return (
         <div className="chart">
@@ -30,15 +30,16 @@ function GrafBar(props) {
                         // barWidth={2}
                         labelComponent={<VictoryTooltip />}
                         labels={props.data.map(avg => {
-                            return `Moeilijkheid: ${ avg.Moeilijk } Leuk: ${avg.Leuk}`
+                            return `Moeilijkheid: ${avg.Moeilijk} Leuk: ${avg.Leuk}`
                         })}
-                        
+
                         barWidth={number}
-                        padding={20}
+                        data={props.data.slice(0, 10)}
+                        // padding={20}
                         tickValues={[1, 2, 3, 4, 5]}
                         tickFormat={props.data.map(avg => avg.Opdracht)}
-                        alignment="start"
-                        data={props.data}
+                        // alignment="start"
+
                         x="Opdracht"
                         y="Moeilijk"
                     />
@@ -46,15 +47,15 @@ function GrafBar(props) {
                         // barWidth={2}
                         labelComponent={<VictoryTooltip />}
                         labels={props.data.map(avg => {
-                            return `Moeilijkheid: ${ avg.Moeilijk } Leuk: ${avg.Leuk}`
+                            return `Moeilijkheid: ${avg.Moeilijk} Leuk: ${avg.Leuk}`
                         })}
-                        
+                        data={props.data.slice(0, 10)}
                         barWidth={number}
                         padding={20}
                         tickValues={[1, 2, 3, 4, 5]}
                         tickFormat={props.data.map(avg => avg.Opdracht)}
-                        alignment="start"
-                        data={props.data}
+                        // alignment="start"
+
                         x="Opdracht"
                         y="Leuk"
                     />
@@ -62,22 +63,24 @@ function GrafBar(props) {
                 </VictoryGroup>
 
                 <VictoryAxis
-                        tickFormat={props.data.map(avg => avg.Opdracht)}
-                        style={{
-                            tickLabels: { angle: 90, textAnchor: 'start', fontSize: 6 },
-                            ticks: { stroke: "grey", size: 2 },
-                        }}
-                    />
+                    tickFormat={props.data.map(avg => avg.Opdracht)}
+                    tickValues={[1, 2, 3, 4, 5]}
+                    style={{
+                        tickLabels: { angle: 90, textAnchor: 'start', fontSize: 6 },
+                        ticks: { stroke: "grey", size: 2 },
+                    }}
+                />
 
-                    <VictoryAxis
-                        dependentAxis
-                        tickFormat={[1, 2, 3, 4, 5]}
-                        tickValues={[1, 2, 3, 4, 5]}
-                        style={{
-                            tickLabels: { fontSize: 10 },
-                            ticks: { stroke: "grey", size: 5 }
-                        }}
-                    />
+                <VictoryAxis
+                    dependentAxis
+
+                    tickValues={[1, 2, 3, 4, 5]}
+                    tickFormat={[1, 2, 3, 4, 5]}
+                    style={{
+                        tickLabels: { fontSize: 10 },
+                        ticks: { stroke: "grey", size: 5 }
+                    }}
+                />
 
             </VictoryChart>
 

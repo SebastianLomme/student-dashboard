@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
@@ -37,6 +38,20 @@ function Home() {
     return (
         <div className="container">
             {assigmentsSwitch}
+        </div>
+
+=======
+import React from 'react';
+import GrafBar from './GrafBar';
+import { useSelector } from 'react-redux'
+
+function Home() {
+    const data = useSelector(state => state.reducer.assigments)
+
+    return (
+        <div className="container">
+            <h1>Home</h1>
+            <GrafBar data={data} />
 
         </div>
     )
