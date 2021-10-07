@@ -22,7 +22,7 @@ function App() {
   const data = useSelector(state => state.reducer.assigments)
   useEffect(() => {
     csv(studentData).then(data => dispatch(setData(data)))
-  }, [dispatch])
+}, [dispatch])
   
   return (
     <Router>
