@@ -46,12 +46,30 @@ export default function dataReducer(state = initialState, action) {
                 }
                 AvverageArray.push(object)
             })
+
+            const dataArray = []
+
+            action.payload.forEach(item => {
+                const object = {
+                    Naam: item.Naam,
+                    Opdracht: item.Opdracht,
+                    Moeilijk: parseInt(item.Moeilijk),
+                    Leuk: parseInt(item.Leuk),
+                    IsFilter: false,
+                }
+                dataArray.push(object)
+            })
             return {
                 ...state,
-                data: action.payload,
+                data: dataArray,
                 students: students,
                 assigments: AvverageArray,
                 isLoading: false,
+            }
+        case "FILTER_DATA":
+            console.log("Filter")
+            return {
+                ...state
             }
         default: {
             return state;

@@ -4,3 +4,10 @@ export const setData = (data) => {
         payload: data
     }
 }
+
+export const filterData = (data) => {
+    return {
+        type: "FILTER_DATA",
+        payload: data
+    }
+}
