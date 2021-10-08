@@ -4,13 +4,14 @@ import { filterData } from '../redux/action';
 import { v4 as uuidv4 } from 'uuid';
 
 function DropDownButton(props) {
-    const { assigments, filter } = props
+    const { assigments, filter, group} = props
     console.log("Filter", filter)
     console.log("assigments", filter, assigments)
     const dispatch = useDispatch()
     const handleChange = (e) => {
         const { id } = e.target
-        dispatch(filterData([id, filter]))
+        console.log("id",id)
+        dispatch(filterData([id, filter, group]))
     }
     const assigmentsSwitch = assigments.map((item) => {
         return (<div className="form-check form-switch " key={uuidv4()}>
@@ -21,7 +22,7 @@ function DropDownButton(props) {
     )
 
     return (
-        <div className="btn-group ">
+        <div className="btn-group p-2">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                 Filter op { filter }!
             </button>

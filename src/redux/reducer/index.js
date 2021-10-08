@@ -12,8 +12,12 @@ export default function dataReducer(state = initialState, action) {
             const filterStudent = (data) => {
                 const students = []
                 data.forEach(student => {
-                    if (!students.includes(student.Naam)) {
-                        students.push(student.Naam)
+                    if (!students.map(item => item.Naam).includes(student.Naam)) {
+                        const object = {
+                            Naam: student.Naam,
+                            IsFilter: true,
+                        }
+                        students.push(object)
                     }
                 })
                 return students
@@ -34,6 +38,7 @@ export default function dataReducer(state = initialState, action) {
             const AvverageArray = []
 
             const getAvverage = (data, filterNaam, filterGroep) => {
+                console.log("FilterData: ", data)
                 const filterArray = data.filter(item => item.Opdracht === filterNaam).map(item => parseInt(item[filterGroep]))
                 return filterArray.reduce((current, total) => current + total) / filterArray.length
             }
@@ -47,9 +52,7 @@ export default function dataReducer(state = initialState, action) {
                 }
                 AvverageArray.push(object)
             })
-
             const dataArray = []
-
             action.payload.forEach(item => {
                 const object = {
                     Naam: item.Naam,
@@ -68,12 +71,10 @@ export default function dataReducer(state = initialState, action) {
                 isLoading: false,
             }
         case "FILTER_DATA":
-            console.log("Data: ", state.data)
-            console.log("action.payload: ", action.payload[0])
-            console.log("action.payload: ", action.payload[1])
+            const [id, filter, group] = action.payload
             const newArray = []
-            state.assigments.forEach(item => {
-                if (item[action.payload[1]] === action.payload[0]) {
+            state[group].forEach(item => {
+                if ( item[filter] === id) {
                     const object = {
                         ...item,
                         IsFilter: !item.IsFilter,
@@ -82,10 +83,11 @@ export default function dataReducer(state = initialState, action) {
                 } else {
                     newArray.push(item)
                 }
-            })
+            }) 
             const newDataArray = []
+            const [filterArray] = newArray.filter(item => item[filter] === id)
             state.data.forEach(item => {
-                if (item[action.payload[1]] === action.payload[0]) {
+                if (item[filter] === id && filterArray.IsFilter === !item.IsFilter) {
                     const object = {
                         ...item,
                         IsFilter: !item.IsFilter
@@ -98,10 +100,10 @@ export default function dataReducer(state = initialState, action) {
             })
             return {
                 ...state,
-                assigments: newArray,
+                [group]: newArray,
                 data: newDataArray,
-
             }
+        
         default: {
             return state;
         }

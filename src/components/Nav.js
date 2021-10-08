@@ -10,7 +10,7 @@ function Nav() {
 
     const optionArray = students.map(student => (
         <p key={uuidv4()}>
-            <Link className="dropdown-item" to={`/student/${student}`}>{student}</Link>
+            <Link className="dropdown-item" to={`/student/${student.Naam}`}>{student.Naam}</Link>
         </p>
     ))
     return (
