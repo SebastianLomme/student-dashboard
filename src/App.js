@@ -15,6 +15,7 @@ import {
 
 } from "react-router-dom";
 import StudentInfo from './StudentInfo';
+import AssigmentInfo from './AssigmentInfo';
 
 
 function App() {
@@ -34,9 +35,10 @@ function App() {
             <Home />
           </Route>
           <Route path="/grafiek">
-            <GrafBar data={data} />
+            <GrafBar data={data} filter={"Opdracht"} />
           </Route>
           <Route path="/student/:name/" component={StudentInfo} />
+          <Route path="/assigment/:opdracht/" component={AssigmentInfo} />
         </Switch>
       </div>
     </Router>

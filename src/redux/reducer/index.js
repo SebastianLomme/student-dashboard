@@ -4,6 +4,7 @@ const initialState = {
     data: [],
     students: [],
     assigments: [],
+    showInGraf: "m-l",
 }
 
 export default function dataReducer(state = initialState, action) {
@@ -38,7 +39,6 @@ export default function dataReducer(state = initialState, action) {
             const AvverageArray = []
 
             const getAvverage = (data, filterNaam, filterGroep) => {
-                console.log("FilterData: ", data)
                 const filterArray = data.filter(item => item.Opdracht === filterNaam).map(item => parseInt(item[filterGroep]))
                 return filterArray.reduce((current, total) => current + total) / filterArray.length
             }
@@ -71,23 +71,46 @@ export default function dataReducer(state = initialState, action) {
                 isLoading: false,
             }
         case "FILTER_DATA":
-            const [id, filter, group] = action.payload
-            const newArray = []
-            state[group].forEach(item => {
-                if ( item[filter] === id) {
+            const [id, filter] = action.payload
+            const newArrayStudents = []
+            state.students.forEach(item => {
+                if (item.Naam === id) {
                     const object = {
                         ...item,
                         IsFilter: !item.IsFilter,
                     }
-                    newArray.push(object)
+                    newArrayStudents.push(object)
                 } else {
-                    newArray.push(item)
+                    newArrayStudents.push(item)
                 }
-            }) 
+            })
+            const newArrayAssigments = []
+            state.assigments.forEach(item => {
+                const getAvverage = (filterName, filterGroep) => {
+                    const filterStudentArray = newArrayStudents.filter(item => item.IsFilter === true).map(item => item.Naam)
+                    const filterArray = state.data.filter(item => item.Opdracht === filterGroep).filter(item => filterStudentArray.includes(item.Naam)).map(item => item[filterName])
+                    return Math.round((filterArray.reduce((current, total) => current + total, 0) / filterArray.length) * 10) / 10
+                }
+                if (item.Opdracht === id) {
+                    const object = {
+                        ...item,
+                        Moeilijk: getAvverage("Moeilijk", item.Opdracht),
+                        Leuk: getAvverage("Leuk", item.Opdracht),
+                        IsFilter: !item.IsFilter,
+                    }
+                    newArrayAssigments.push(object)
+                } else {
+                    const object = {
+                        ...item,
+                        Moeilijk: getAvverage("Moeilijk", item.Opdracht),
+                        Leuk: getAvverage("Leuk", item.Opdracht),
+                    }
+                    newArrayAssigments.push(object)
+                }
+            })
             const newDataArray = []
-            const [filterArray] = newArray.filter(item => item[filter] === id)
             state.data.forEach(item => {
-                if (item[filter] === id && filterArray.IsFilter === !item.IsFilter) {
+                if (item[filter] === id ) {
                     const object = {
                         ...item,
                         IsFilter: !item.IsFilter
@@ -96,14 +119,49 @@ export default function dataReducer(state = initialState, action) {
                 } else {
                     newDataArray.push(item)
                 }
-
             })
             return {
                 ...state,
-                [group]: newArray,
+                students: newArrayStudents,
+                assigments: newArrayAssigments,
                 data: newDataArray,
             }
-        
+        case "SHOW_IN_GRAF":
+            return {
+                ...state,
+                showInGraf: action.payload,
+            }
+        case "RESET_DATA":
+            const newArray = state.data.map(data => {
+                return ({
+                    ...data,
+                    IsFilter: true
+                })
+            })
+            
+            const studentArray = state.students.map(student => {
+                return ({
+                    ...student,
+                    IsFilter: true
+                })
+            })
+            const assigmentArray = state.assigments.map(assigment => {
+                return ({
+                    ...assigment,
+                    IsFilter: true
+                })
+            })
+            return {
+                ...state,
+                data: newArray,
+                students: studentArray,
+                assigments: assigmentArray,
+                showInGraf: "m-l",
+            }
+        case "SORT_DATA":
+            return {
+                ...state
+            }
         default: {
             return state;
         }

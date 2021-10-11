@@ -1,34 +1,38 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
-import { filterData } from '../redux/action';
 import GrafBar from './GrafBar';
 import DropDownButton from "./DropDownButton"
+import {resetData, showInGraf} from "../redux/action"
 
 function Home() {
     const dispatch = useDispatch()
     const assigments = useSelector(state => state.reducer.assigments)
     const students = useSelector(state => state.reducer.students)
-    const data = useSelector(state => state.reducer.data)
-    const handleChange = (e) => {
-        const { id } = e.target
-        dispatch(filterData(id))
+    const handleClick = (payload) => {
+        dispatch(showInGraf(payload))
     }
-
-    const assigmentsSwitch = assigments.map((item) => {
-        return (<div className="form-check form-switch " key={uuidv4()}>
-            <input className="form-check-input" type="checkbox" role="switch" onChange={handleChange} id={`${item.Opdracht}`} checked={item.IsFilter} />
-            <label className="form-check-label" htmlFor={`${item.Opdracht}`}>{item.Opdracht}</label>
-        </div>)
+    const handleClickReset = () => {
+        dispatch(resetData())
     }
-    )
-
     return (
         <div className="container bg-light">
-            <DropDownButton assigments={assigments} filter={"Opdracht"} group={"assigments"} target={"Opdracht"}  />
-            <DropDownButton assigments={students} filter={"Naam"} group={"students"} />
+            <DropDownButton assigments={assigments} filter={"Opdracht"}  />
+            <DropDownButton assigments={students} filter={"Naam"} />
+            <button className="btn btn-primary m-2"  onClick={() => handleClick("leuk")}>
+                Show Leuk
+            </button>
+            <button className="btn btn-primary m-2"  onClick={() => handleClick("m")}>
+                Show Moeilijk
+            </button>
+            <button className="btn btn-primary m-2"  onClick={() => handleClick("m-l")}>
+                Show Moeilijk & leuk
+            </button>
+            <button className="btn btn-primary m-2"  onClick={() => handleClickReset()}>
+                reset
+            </button>
+
                 <div >
-                    <GrafBar data={assigments}  />
+                    <GrafBar data={assigments} filter={"Opdracht"}  />
             </div>
 
             </div>

@@ -1,11 +1,15 @@
 import React from 'react';
+import { useSelector } from "react-redux";
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiContainer, VictoryTooltip } from 'victory';
+
+
 
 function GrafBar(props) {
     const data = props.data.filter(item => item.IsFilter === true)
-    console.log("DataGraf: ", data)
+    const {filter} = props
     const getNumber = (data) => 300 / (data.slice(0, 10).length * 2)
     const number = getNumber(data)
+    const showInGraf = useSelector(state => state.reducer.showInGraf)
     return (
         <div className="chart">
             <VictoryChart
@@ -15,58 +19,59 @@ function GrafBar(props) {
                     />
                 }
             >
-
                 <VictoryGroup
                     offset={number}
-                    colorScale={["gray", "blue"]}
+                    // colorScale={["gray", "blue"]}
                     animate={{
                         duration: 2000,
                         onLoad: { duration: 1000 }
                     }}
                 >
+                    {showInGraf.includes("m") ?
+                        <VictoryBar
+                            labelComponent={<VictoryTooltip />}
+                            labels={data.map(avg => {
+                                return `Moeilijkheid: ${avg.Moeilijk}`
+                            })}
+                            colorScale={["blue"]}
+                            barWidth={number}
+                            padding={20}
+                            data={data.slice(0, 10)}
+                            tickValues={[1, 2, 3, 4, 5]}
+                            tickFormat={data.map(avg => avg[filter])}
+                            x={filter}
+                            y="Moeilijk"
+                        />
+                        : null
 
-                    <VictoryBar
-                        // barWidth={2}
-                        labelComponent={<VictoryTooltip />}
-                        labels={data.map(avg => {
-                            return `Moeilijkheid: ${avg.Moeilijk} Leuk: ${avg.Leuk}`
-                        })}
+                    }
+                    {showInGraf.includes("l") ?
+                        <VictoryBar
+                            labelComponent={<VictoryTooltip />}
+                            labels={data.map(avg => {
+                                return `Leuk: ${avg.Leuk}`
+                            })}
+                            colorScale={["gray"]}
+                            barWidth={number}
+                            padding={20}
+                            data={data.slice(0, 10)}
+                            tickValues={[1, 2, 3, 4, 5]}
+                            tickFormat={data.map(avg => avg[filter])}
+                            x={filter}
+                            y="Leuk"
+                        />
+                        : null
+                    }
 
-                        barWidth={number}
-                        data={data.slice(0, 10)}
-                        // padding={20}
-                        tickValues={[1, 2, 3, 4, 5]}
-                        tickFormat={data.map(avg => avg.Opdracht)}
-                        // alignment="start"
-
-                        x="Opdracht"
-                        y="Moeilijk"
-                    />
-                    <VictoryBar
-                        // barWidth={2}
-                        labelComponent={<VictoryTooltip />}
-                        labels={data.map(avg => {
-                            return `Moeilijkheid: ${avg.Moeilijk} Leuk: ${avg.Leuk}`
-                        })}
-                        data={data.slice(0, 10)}
-                        barWidth={number}
-                        padding={20}
-                        tickValues={[1, 2, 3, 4, 5]}
-                        tickFormat={data.map(avg => avg.Opdracht)}
-                        // alignment="start"
-
-                        x="Opdracht"
-                        y="Leuk"
-                    />
 
                 </VictoryGroup>
 
                 <VictoryAxis
-                    tickFormat={data.map(avg => avg.Opdracht)}
+                    tickFormat={data.map(avg => avg[filter])}
                     tickValues={[1, 2, 3, 4, 5]}
                     style={{
                         tickLabels: { angle: 90, textAnchor: 'start', fontSize: 6 },
-                        ticks: { stroke: "grey", size: 2 },
+                        ticks: { stroke: "grey", size: 5 },
                     }}
                 />
 
