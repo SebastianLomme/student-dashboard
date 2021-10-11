@@ -5,6 +5,7 @@ const initialState = {
     students: [],
     assigments: [],
     showInGraf: "m-l",
+    sortBy: "",
 }
 
 export default function dataReducer(state = initialState, action) {
@@ -159,8 +160,10 @@ export default function dataReducer(state = initialState, action) {
                 showInGraf: "m-l",
             }
         case "SORT_DATA":
+            console.log(action.payload)
             return {
-                ...state
+                ...state,
+                sortBy: action.payload
             }
         default: {
             return state;
