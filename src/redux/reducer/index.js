@@ -6,6 +6,7 @@ const initialState = {
     assigments: [],
     showInGraf: "m-l",
     sortBy: "",
+    studentInfo: [],
 }
 
 export default function dataReducer(state = initialState, action) {
@@ -70,6 +71,11 @@ export default function dataReducer(state = initialState, action) {
                 students: students,
                 assigments: AvverageArray,
                 isLoading: false,
+            }
+        case "SET_STUDENT_INFO":
+            return {
+                ...state,
+                studentInfo: action.payload
             }
         case "FILTER_DATA":
             const [id, filter] = action.payload

@@ -5,6 +5,14 @@ export const setData = (data) => {
     }
 }
 
+export const setStudentInfo = (info) => {
+    return {
+        type: "SET_STUDENT_INFO",
+        payload: info,
+    }
+    
+}
+
 export const filterData = (data) => {
     return {
         type: "FILTER_DATA",

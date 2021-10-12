@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { setData } from './redux/action';
-import { useEffect } from 'react';
+import { setData, setStudentInfo } from './redux/action';
 import { csv } from "d3";
 import studentData from "./student-dashboard-data.csv";
+import studentInfoData from "./student-info-data.csv"
 import Header  from './components/Header';
 import Nav from "./components/Nav";
 import Home from './components/Home';
@@ -23,8 +23,10 @@ function App() {
   const data = useSelector(state => state.reducer.assigments)
   useEffect(() => {
     csv(studentData).then(data => dispatch(setData(data)))
+  }, [dispatch])
+  useEffect(() => {
+    csv(studentInfoData).then(data => dispatch(setStudentInfo(data)))
 }, [dispatch])
-  
   return (
     <Router>
       <div className="App">
