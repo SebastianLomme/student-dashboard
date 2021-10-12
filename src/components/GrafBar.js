@@ -7,7 +7,7 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiCont
 function GrafBar(props) {
     const data = props.data.filter(item => item.IsFilter === true)
     const {filter} = props
-    const getNumber = (data) => 300 / (data.slice(0, 10).length * 2)
+    const getNumber = (data) => 300 / (data.length * 2)
     const number = getNumber(data)
     const showInGraf = useSelector(state => state.reducer.showInGraf)
     return (
@@ -33,10 +33,10 @@ function GrafBar(props) {
                             labels={data.map(avg => {
                                 return `Moeilijkheid: ${avg.Moeilijk}`
                             })}
-                            colorScale={["blue"]}
+                            color={"blue"}
                             barWidth={number}
                             padding={20}
-                            data={data.slice(0, 10)}
+                            data={data}
                             tickValues={[1, 2, 3, 4, 5]}
                             tickFormat={data.map(avg => avg[filter])}
                             x={filter}
@@ -51,10 +51,10 @@ function GrafBar(props) {
                             labels={data.map(avg => {
                                 return `Leuk: ${avg.Leuk}`
                             })}
-                            colorScale={["gray"]}
+                            color={"gray"}
                             barWidth={number}
                             padding={20}
-                            data={data.slice(0, 10)}
+                            data={data}
                             tickValues={[1, 2, 3, 4, 5]}
                             tickFormat={data.map(avg => avg[filter])}
                             x={filter}

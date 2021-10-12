@@ -134,10 +134,10 @@ export default function dataReducer(state = initialState, action) {
             }
         case "RESET_DATA":
             const newArray = state.data.map(data => {
-                return ({
+                return {
                     ...data,
-                    IsFilter: true
-                })
+                    IsFilter: true,
+                }
             })
             
             const studentArray = state.students.map(student => {
@@ -158,9 +158,9 @@ export default function dataReducer(state = initialState, action) {
                 students: studentArray,
                 assigments: assigmentArray,
                 showInGraf: "m-l",
+                sortBy: "",
             }
         case "SORT_DATA":
-            console.log(action.payload)
             return {
                 ...state,
                 sortBy: action.payload

@@ -8,8 +8,7 @@ function DropDownButton(props) {
     const dispatch = useDispatch()
     const handleChange = (e) => {
         const { id } = e.target
-        dispatch(filterData([id, filter]),
-        console.log(assigments, filter))
+        dispatch(filterData([id, filter]))
     }
     const assigmentsSwitch = assigments.map((item) => {
         return (<div className="form-check form-switch mx-2 " key={uuidv4()}>
