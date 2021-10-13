@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from "react-redux";
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiContainer, VictoryTooltip } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiContainer, VictoryTooltip, VictoryLegend } from 'victory';
 
 
 
 function GrafBar(props) {
     const data = props.data.filter(item => item.IsFilter === true)
-    const {filter} = props
+    const { filter } = props
     const getNumber = (data) => 300 / (data.length * 2)
     const number = getNumber(data)
     const showInGraf = useSelector(state => state.reducer.showInGraf)
@@ -19,9 +19,16 @@ function GrafBar(props) {
                     />
                 }
             >
+                <VictoryLegend x={250} y={0}
+                    orientation="horizontal"
+                    gutter={10}
+                    data={[
+                        { name: "Moeilijk", symbol: { fill: "blue", type: "star" } },
+                        { name: "Leuk", symbol: { fill: "gray", type: "star" } }
+                    ]}
+                />
                 <VictoryGroup
                     offset={number}
-                    // colorScale={["gray", "blue"]}
                     animate={{
                         duration: 2000,
                         onLoad: { duration: 1000 }
@@ -62,8 +69,6 @@ function GrafBar(props) {
                         />
                         : null
                     }
-
-
                 </VictoryGroup>
 
                 <VictoryAxis
@@ -74,10 +79,8 @@ function GrafBar(props) {
                         ticks: { stroke: "grey", size: 5 },
                     }}
                 />
-
                 <VictoryAxis
                     dependentAxis
-
                     tickValues={[1, 2, 3, 4, 5]}
                     tickFormat={[1, 2, 3, 4, 5]}
                     style={{
@@ -86,9 +89,12 @@ function GrafBar(props) {
                     }}
                 />
 
+
+
             </VictoryChart>
 
-        </div>
+
+        </div >
     )
 }
 

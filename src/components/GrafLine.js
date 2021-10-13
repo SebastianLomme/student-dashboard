@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from "react-redux";
-import { VictoryLine, VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryTooltip } from 'victory';
+import { VictoryLine, VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryTooltip, VictoryLegend } from 'victory';
 
 
 
@@ -17,7 +17,20 @@ function GrafLine(props) {
                     />
                 }
                 colorScale={["blue", "gray"]}
+                animate={{
+                    duration: 2000,
+                    onLoad: { duration: 1000 }
+                }}
             >
+                                <VictoryLegend x={250} y={0}
+                    orientation="horizontal"
+                    gutter={10}
+                    data={[
+                        { name: "Moeilijk", symbol: { fill: "blue", type: "star" } },
+                        { name: "Leuk", symbol: { fill: "gray", type: "star" } }
+                    ]}
+                />
+
                     {showInGraf.includes("m") ?
                         <VictoryLine
                             labelComponent={<VictoryTooltip />}

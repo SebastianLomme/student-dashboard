@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 function Table({data}) {
-    console.log("data: ", data)
     const dataArray = data.map(item => {
         return (
             <tr key={uuidv4()}>

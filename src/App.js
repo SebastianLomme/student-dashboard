@@ -14,8 +14,8 @@ import {
   Route,
 
 } from "react-router-dom";
-import StudentInfo from './StudentInfo';
-import AssigmentInfo from './AssigmentInfo';
+import StudentInfo from './components/StudentInfo';
+import AssigmentInfo from './components/AssigmentInfo.js';
 
 
 function App() {

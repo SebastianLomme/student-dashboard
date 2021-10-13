@@ -1,8 +1,7 @@
 import React from 'react'
-import GrafBar from './components/GrafBar'
 import { useSelector } from 'react-redux'
-import DropDownButton from "./components/DropDownButton"
-import Table from './components/Table'
+import DropDownButton from "./DropDownButton"
+import SortFunction from './SortFunction'
 
 
 function StudentInfo(props) {
@@ -35,9 +34,8 @@ function StudentInfo(props) {
                     <img className="" src={filterStudentInfo ? filterStudentInfo.image : null} width={300} alt="" />
                 </div>
             </div>
-            <DropDownButton assigments={assigments} filter={"Opdracht"} target={"Opdracht"} />
-            <GrafBar data={filterData} filter={"Opdracht"} />
-            <Table data={filterData} />
+            <DropDownButton assigments={assigments} filter={"Opdracht"}/>
+            <SortFunction assigments={filterData} data={filterData} filter="Opdracht"  />
         </div>
     )
 }

@@ -1,8 +1,7 @@
 import React from 'react'
-import GrafBar from './components/GrafBar'
 import { useSelector } from 'react-redux'
-import DropDownButton from "./components/DropDownButton"
-import Table from './components/Table'
+import DropDownButton from "./DropDownButton"
+import SortFunction from './SortFunction'
 
 function AssigmentInfo(props) {
     const students = useSelector(state => state.reducer.students)
@@ -12,11 +11,9 @@ function AssigmentInfo(props) {
 
     return (
         <div className="container bg-light">
-
             <h1>{opdracht}</h1>
             <DropDownButton assigments={students} filter={"Naam"} />
-            <GrafBar data={filterData} filter={"Naam"} />
-            <Table data={filterData} />
+            <SortFunction assigments={filterData} data={filterData} filter="Naam"  />
         </div>
     )
 }

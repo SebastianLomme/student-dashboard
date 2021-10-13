@@ -116,8 +116,9 @@ export default function dataReducer(state = initialState, action) {
                 }
             })
             const newDataArray = []
+
             state.data.forEach(item => {
-                if (item[filter] === id ) {
+                if (item[filter] === id) {
                     const object = {
                         ...item,
                         IsFilter: !item.IsFilter
@@ -145,7 +146,7 @@ export default function dataReducer(state = initialState, action) {
                     IsFilter: true,
                 }
             })
-            
+
             const studentArray = state.students.map(student => {
                 return ({
                     ...student,
