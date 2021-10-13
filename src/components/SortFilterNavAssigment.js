@@ -4,13 +4,11 @@ import { useSelector } from 'react-redux';
 import SortBy from './SortBy';
 import ShowInGraf from './ShowInGraf';
 
-function SortFilterNav() {
-    const assigments = useSelector(state => state.reducer.assigments);
+function SortFilterNavAssigment() {
     const students = useSelector(state => state.reducer.students);
     
     return (
         <div className="d-flex flex-wrap justify-content-center">
-            <DropDownButton assigments={assigments} filter={"Opdracht"} />
             <DropDownButton assigments={students} filter={"Naam"} />
             <SortBy />
             <ShowInGraf />
@@ -18,4 +16,4 @@ function SortFilterNav() {
     );
 };
 
-export default SortFilterNav;
+export default SortFilterNavAssigment;

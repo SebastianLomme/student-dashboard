@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -11,9 +11,8 @@ function Table({data}) {
                 <td>{item.Moeilijk}</td>
                 <td>{item.Leuk}</td>
             </tr>
-        )
-
-    })
+        );
+    });
 
     return (
         <div>
@@ -31,7 +30,7 @@ function Table({data}) {
                 </tbody>
             </table>
         </div>
-    )
-}
+    );
+};
 
-export default Table
+export default Table;

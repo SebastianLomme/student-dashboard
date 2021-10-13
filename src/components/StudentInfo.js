@@ -1,16 +1,16 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import DropDownButton from "./DropDownButton"
-import SortFunction from './SortFunction'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import SortFilterNavStudent from './SortFilterNavStudent';
+import SortFunction from './SortFunction';
 
 
 function StudentInfo(props) {
-    const studentInfo = useSelector(state => state.reducer.studentInfo)
-    const assigments = useSelector(state => state.reducer.assigments)
-    const data = useSelector(state => state.reducer.data)
-    const { name } = props.match.params
-    const [filterStudentInfo] = studentInfo.filter(student => student.naam === name)
-    const filterData = data.filter(student => student.Naam === name)
+    const studentInfo = useSelector(state => state.reducer.studentInfo);
+    const data = useSelector(state => state.reducer.data);
+    const { name } = props.match.params;
+    const [filterStudentInfo] = studentInfo.filter(student => student.naam === name);
+    const filterData = data.filter(student => student.Naam === name);
+
     return (
         <div className="container bg-light">
             <div className="row p-5">
@@ -34,10 +34,10 @@ function StudentInfo(props) {
                     <img className="" src={filterStudentInfo ? filterStudentInfo.image : null} width={300} alt="" />
                 </div>
             </div>
-            <DropDownButton assigments={assigments} filter={"Opdracht"}/>
+            <SortFilterNavStudent />
             <SortFunction assigments={filterData} data={filterData} filter="Opdracht"  />
         </div>
-    )
-}
+    );
+};
 
-export default StudentInfo
+export default StudentInfo;

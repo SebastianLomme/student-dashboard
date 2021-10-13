@@ -1,18 +1,26 @@
 import React from 'react';
-import { useSelector } from "react-redux";
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryGroup, VictoryVoronoiContainer, VictoryTooltip, VictoryLegend } from 'victory';
-
-
+import { useSelector } from 'react-redux';
+import { 
+    VictoryBar, 
+    VictoryChart, 
+    VictoryAxis, 
+    VictoryGroup, 
+    VictoryVoronoiContainer, 
+    VictoryTooltip, 
+    VictoryLegend,
+} from 'victory';
 
 function GrafBar(props) {
-    const data = props.data.filter(item => item.IsFilter === true)
-    const { filter } = props
-    const getNumber = (data) => 300 / (data.length * 2)
-    const number = getNumber(data)
-    const showInGraf = useSelector(state => state.reducer.showInGraf)
+    const data = props.data.filter(item => item.IsFilter === true);
+    const { filter } = props;
+    const getNumber = (data) => 300 / (data.length * 2);
+    const number = getNumber(data);
+    const showInGraf = useSelector(state => state.reducer.showInGraf);
+    
     return (
         <div className="chart">
             <VictoryChart
+                domainPadding={20}
                 containerComponent={
                     <VictoryVoronoiContainer
                         height={400}
@@ -42,7 +50,6 @@ function GrafBar(props) {
                             })}
                             color={"blue"}
                             barWidth={number}
-                            padding={20}
                             data={data}
                             tickValues={[1, 2, 3, 4, 5]}
                             tickFormat={data.map(avg => avg[filter])}
@@ -50,7 +57,6 @@ function GrafBar(props) {
                             y="Moeilijk"
                         />
                         : null
-
                     }
                     {showInGraf.includes("l") ?
                         <VictoryBar
@@ -60,7 +66,6 @@ function GrafBar(props) {
                             })}
                             color={"gray"}
                             barWidth={number}
-                            padding={20}
                             data={data}
                             tickValues={[1, 2, 3, 4, 5]}
                             tickFormat={data.map(avg => avg[filter])}
@@ -70,7 +75,6 @@ function GrafBar(props) {
                         : null
                     }
                 </VictoryGroup>
-
                 <VictoryAxis
                     tickFormat={data.map(avg => avg[filter])}
                     tickValues={[1, 2, 3, 4, 5]}
@@ -88,14 +92,9 @@ function GrafBar(props) {
                         ticks: { stroke: "grey", size: 5 }
                     }}
                 />
-
-
-
             </VictoryChart>
-
-
         </div >
-    )
-}
+    );
+};
 
-export default GrafBar
+export default GrafBar;

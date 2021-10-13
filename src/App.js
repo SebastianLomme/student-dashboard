@@ -21,12 +21,21 @@ import AssigmentInfo from './components/AssigmentInfo.js';
 function App() {
   const dispatch = useDispatch()
   const data = useSelector(state => state.reducer.assigments)
+  const loading = useSelector(state => state.reducer.isLoading)
+  console.log(loading)
   useEffect(() => {
+    let isSubscribed = true
     csv(studentData).then(data => dispatch(setData(data)))
-  }, [dispatch])
+    return () => isSubscribed = false
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   useEffect(() => {
+    let isSubscribed = true
     csv(studentInfoData).then(data => dispatch(setStudentInfo(data)))
-}, [dispatch])
+    return () => isSubscribed = false
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
   return (
     <Router>
       <div className="App">

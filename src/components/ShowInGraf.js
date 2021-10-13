@@ -1,15 +1,15 @@
 import React from 'react'
-import { useDispatch } from "react-redux";
-import { resetData, showInGraf } from "../redux/action"
+import { useDispatch } from 'react-redux';
+import { resetData, showInGraf } from '../redux/action'
 
 function ShowInGraf() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const handleClick = (payload) => {
-        dispatch(showInGraf(payload))
-    }
+        dispatch(showInGraf(payload));
+    };
     const handleClickReset = () => {
-        dispatch(resetData())
-    }
+        dispatch(resetData());
+    };
     return (
         <>
             <button className="btn btn-secondary m-2" onClick={() => handleClick("leuk")}>
@@ -25,7 +25,7 @@ function ShowInGraf() {
                 reset alles!
             </button>
         </>
-    )
-}
+    );
+};
 
-export default ShowInGraf
+export default ShowInGraf;
