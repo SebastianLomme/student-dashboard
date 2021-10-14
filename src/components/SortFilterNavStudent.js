@@ -1,14 +1,14 @@
 import React from 'react';
-import DropDownButton from './DropDownButton';
+import DropDownButton from './DropDownButtonAssignment';
 import { useSelector } from 'react-redux';
 import SortBy from './SortBy';
 import ShowInGraf from './ShowInGraf';
 
 function SortFilterNavStudent() {
-    const assigments = useSelector(state => state.reducer.assigments);
+    const assignments = useSelector(state => state.reducer.assignments);
     return (
         <div className="d-flex flex-wrap justify-content-center">
-            <DropDownButton assigments={assigments} filter={"Opdracht"} />
+            <DropDownButton assignments={assignments} filter={"Opdracht"} />
             <SortBy />
             <ShowInGraf />
         </div>

@@ -5,53 +5,53 @@ import GrafLine from './GrafLine';
 import Table from './Table';
 
 function SortFunction(props) {
-    const { assigments, data, filter } = props;
+    const { assignments, data, filter } = props;
     const sortBy = useSelector(state => state.reducer.sortBy);
-    let assigmentsData = [...assigments];
+    let assignmentsData = [...assignments];
     let allData = [...data];
 
     switch (sortBy) {
         case "a-z-o":
-            assigmentsData = assigmentsData.sort((a, b) => a.Opdracht < b.Opdracht ? -1 : 1);
-            allData = allData.sort((a, b) => a.Opdracht < b.Opdracht ? -1 : 1);
+            assignmentsData = assignmentsData.sort((first, second) => first.Opdracht < second.Opdracht ? -1 : 1);
+            allData = allData.sort((first, second) => first.Opdracht < second.Opdracht ? -1 : 1);
             break;
         case "z-a-o":
-            assigmentsData = assigmentsData.sort((a, b) => a.Opdracht < b.Opdracht ? 1 : -1);
-            allData = allData.sort((a, b) => a.Opdracht < b.Opdracht ? 1 : -1);
+            assignmentsData = assignmentsData.sort((first, second) => first.Opdracht < second.Opdracht ? 1 : -1);
+            allData = allData.sort((first, second) => first.Opdracht < second.Opdracht ? 1 : -1);
             break;
         case "a-z-s":
-            allData = allData.sort((a, b) => a.Naam < b.Naam ? -1 : 1);
+            allData = allData.sort((first, second) => first.Naam < second.Naam ? -1 : 1);
             break;
         case "z-a-s":
-            allData = allData.sort((a, b) => a.Naam < b.Naam ? 1 : -1);
+            allData = allData.sort((first, second) => first.Naam < second.Naam ? 1 : -1);
             break;
         case "1-5-m":
-            assigmentsData = assigmentsData.sort((a, b) => a.Moeilijk > b.Moeilijk ? 1 : -1);
-            allData = allData.sort((a, b) => a.Moeilijk > b.Moeilijk ? 1 : -1);
+            assignmentsData = assignmentsData.sort((first, second) => first.Moeilijk > second.Moeilijk ? 1 : -1);
+            allData = allData.sort((first, second) => first.Moeilijk > second.Moeilijk ? 1 : -1);
             break;
         case "5-1-m":
-            assigmentsData = assigmentsData.sort((a, b) => a.Moeilijk < b.Moeilijk ? 1 : -1);
-            allData = allData.sort((a, b) => a.Moeilijk < b.Moeilijk ? 1 : -1);
+            assignmentsData = assignmentsData.sort((first, second) => first.Moeilijk < second.Moeilijk ? 1 : -1);
+            allData = allData.sort((first, second) => first.Moeilijk < second.Moeilijk ? 1 : -1);
             break;
         case "1-5-l":
-            assigmentsData = assigmentsData.sort((a, b) => a.Leuk > b.Leuk ? 1 : -1);
-            allData = allData.sort((a, b) => a.Leuk > b.Leuk ? 1 : -1);
+            assignmentsData = assignmentsData.sort((first, second) => first.Leuk > second.Leuk ? 1 : -1);
+            allData = allData.sort((first, second) => first.Leuk > second.Leuk ? 1 : -1);
             break;
         case "5-1-l":
-            assigmentsData = assigmentsData.sort((a, b) => a.Leuk < b.Leuk ? 1 : -1);
-            allData = allData.sort((a, b) => a.Leuk < b.Leuk ? 1 : -1);
+            assignmentsData = assignmentsData.sort((first, second) => first.Leuk < second.Leuk ? 1 : -1);
+            allData = allData.sort((first, second) => first.Leuk < second.Leuk ? 1 : -1);
             break;
         default:
             break;
-    }
+    };
 
     return (
         <div>
             <div >
-                <GrafBar data={assigmentsData} filter={filter} />
+                <GrafBar data={assignmentsData} filter={filter} />
             </div>
             <div >
-                <GrafLine data={assigmentsData} filter={filter} />
+                <GrafLine data={assignmentsData} filter={filter} />
             </div>
             <Table data={allData} />
         </div>

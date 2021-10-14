@@ -6,21 +6,34 @@ import {
     VictoryAxis, 
     VictoryGroup, 
     VictoryVoronoiContainer, 
-    VictoryTooltip, 
+    // VictoryTooltip, 
     VictoryLegend,
 } from 'victory';
 
 function GrafBar(props) {
-    const data = props.data.filter(item => item.IsFilter === true);
-    const { filter } = props;
-    const getNumber = (data) => 300 / (data.length * 2);
-    const number = getNumber(data);
+    const { filter, data } = props;
+    const students = useSelector(state => state.reducer.students);
+    const assignments = useSelector(state => state.reducer.assignments);
     const showInGraf = useSelector(state => state.reducer.showInGraf);
-    
+    const getNumber = (data) => 300 / (data.length * 2);
+    let newData = []
+
+    switch (filter) {
+        case "Naam":
+            const filterStudent = students.filter(student => student.IsFilter === true).map(student => student.Naam)
+            newData = data.filter(item => filterStudent.includes(item.Naam))
+            break
+        case "Opdracht":
+            const filterAssignment = assignments.filter(assignment => assignment.IsFilter === true).map(assignment => assignment.Opdracht)
+            newData = data.filter(item => filterAssignment.includes(item.Opdracht))
+            break
+        default: newData = data
+    }
+    const number = getNumber(newData);
     return (
         <div className="chart">
             <VictoryChart
-                domainPadding={20}
+                domainPadding={number}
                 containerComponent={
                     <VictoryVoronoiContainer
                         height={400}
@@ -31,28 +44,28 @@ function GrafBar(props) {
                     orientation="horizontal"
                     gutter={10}
                     data={[
-                        { name: "Moeilijk", symbol: { fill: "blue", type: "star" } },
-                        { name: "Leuk", symbol: { fill: "gray", type: "star" } }
+                        { name: "Moeilijk", symbol: { fill: "#CB997E", type: "star" } },
+                        { name: "Leuk", symbol: { fill: "#6B705C", type: "star" } }
                     ]}
                 />
                 <VictoryGroup
                     offset={number}
-                    animate={{
-                        duration: 2000,
-                        onLoad: { duration: 1000 }
-                    }}
+                    // animate={{
+                    //     duration: 2000,
+                    //     onLoad: { duration: 1000 }
+                    // }}
                 >
                     {showInGraf.includes("m") ?
                         <VictoryBar
-                            labelComponent={<VictoryTooltip />}
-                            labels={data.map(avg => {
-                                return `Moeilijkheid: ${avg.Moeilijk}`
-                            })}
-                            color={"blue"}
+                            // labelComponent={<VictoryTooltip />}
+                            // labels={newData.map(avg => {
+                            //     return `Moeilijkheid: ${avg.Moeilijk}`
+                            // })}
+                            color={"#CB997E"}
                             barWidth={number}
-                            data={data}
+                            data={newData}
                             tickValues={[1, 2, 3, 4, 5]}
-                            tickFormat={data.map(avg => avg[filter])}
+                            tickFormat={newData.map(avg => avg[filter])}
                             x={filter}
                             y="Moeilijk"
                         />
@@ -60,15 +73,15 @@ function GrafBar(props) {
                     }
                     {showInGraf.includes("l") ?
                         <VictoryBar
-                            labelComponent={<VictoryTooltip />}
-                            labels={data.map(avg => {
-                                return `Leuk: ${avg.Leuk}`
-                            })}
-                            color={"gray"}
+                            // labelComponent={<VictoryTooltip />}
+                            // labels={newData.map(avg => {
+                            //     return `Leuk: ${avg.Leuk}`
+                            // })}
+                            color={"#6B705C"}
                             barWidth={number}
-                            data={data}
+                            data={newData}
                             tickValues={[1, 2, 3, 4, 5]}
-                            tickFormat={data.map(avg => avg[filter])}
+                            tickFormat={newData.map(avg => avg[filter])}
                             x={filter}
                             y="Leuk"
                         />
@@ -76,7 +89,7 @@ function GrafBar(props) {
                     }
                 </VictoryGroup>
                 <VictoryAxis
-                    tickFormat={data.map(avg => avg[filter])}
+                    tickFormat={newData.map(avg => avg[filter])}
                     tickValues={[1, 2, 3, 4, 5]}
                     style={{
                         tickLabels: { angle: 90, textAnchor: 'start', fontSize: 6 },

@@ -1,10 +1,14 @@
-// $theme-colors: (
-//     "primary": red,
-//     "secondary": green,
-//     );
+$theme-colors: (
+    "primary": #CB997E,
+    "secondary": #6B705C,
+    "light": #FFF5ED,
+    );
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+body {
+    color: #4A4E3E;
+}
 
 
 .chart {

@@ -35,7 +35,7 @@ function StudentInfo(props) {
                 </div>
             </div>
             <SortFilterNavStudent />
-            <SortFunction assigments={filterData} data={filterData} filter="Opdracht"  />
+            <SortFunction assignments={filterData} data={filterData} filter="Opdracht"  />
         </div>
     );
 };

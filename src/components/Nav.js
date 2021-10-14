@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 
 function Nav() {
     const students = useSelector(state => state.reducer.students);
-    const assigments = useSelector(state => state.reducer.assigments);
+    const assignments = useSelector(state => state.reducer.assignments);
     const studentArray = students.map(student => (
         <p key={uuidv4()}>
             <Link className="dropdown-item" to={`/student/${student.Naam}`}>{student.Naam}</Link>
         </p>
     ));
-    const assigmentsArray = assigments.map(assigment => (
+    const assignmentsArray = assignments.map(assignment => (
         <p key={uuidv4()}>
-            <Link className="dropdown-item" to={`/assigment/${assigment.Opdracht}`}>{assigment.Opdracht}</Link>
+            <Link className="dropdown-item" to={`/assignment/${assignment.Opdracht}`}>{assignment.Opdracht}</Link>
         </p>
     ));
 
@@ -43,7 +43,7 @@ function Nav() {
                     <button
                         className="btn btn-secondary dropdown-toggle"
                         type="button"
-                        id="dropdownMenuButtonAssigment"
+                        id="dropdownMenuButtonAssignment"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
@@ -52,9 +52,9 @@ function Nav() {
                     </button>
                     <div
                         className="dropdown-menu dropdown-scroll"
-                        aria-labelledby="dropdownMenuButtonAssigment"
+                        aria-labelledby="dropdownMenuButtonAssignment"
                     >
-                        {assigmentsArray}
+                        {assignmentsArray}
                     </div>
                 </div>
                 <button
@@ -74,7 +74,6 @@ function Nav() {
                 >
                     <div className="navbar-nav">
                         <Link className="nav-link active pe-5" aria-current="page" to="/">Home</Link>
-                        <Link className="nav-link pe-5" to="/grafiek">Grafiek</Link>
                     </div>
                 </div>
             </div>

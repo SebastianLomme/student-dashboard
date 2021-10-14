@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { resetData, showInGraf } from '../redux/action'
+import { getAverage, resetData, showInGraf } from '../redux/action'
 
 function ShowInGraf() {
     const dispatch = useDispatch();
@@ -9,6 +9,7 @@ function ShowInGraf() {
     };
     const handleClickReset = () => {
         dispatch(resetData());
+        dispatch(getAverage())
     };
     return (
         <>

@@ -2,7 +2,7 @@ const initialState = {
     isLoading: true,
     data: [],
     students: [],
-    assigments: [],
+    assignments: [],
     showInGraf: "m-l",
     sortBy: "",
     studentInfo: [],
@@ -11,64 +11,56 @@ const initialState = {
 export default function dataReducer(state = initialState, action) {
     switch (action.type) {
         case "SET_DATA":
-            const filterStudent = (data) => {
-                const students = [];
-                data.forEach(student => {
-                    if (!students.map(item => item.Naam).includes(student.Naam)) {
-                        const object = {
-                            Naam: student.Naam,
-                            IsFilter: true,
-                        };
-                        students.push(object);
-                    };
-                });
-                return students;
-            };
-
-            const filterAssigments = (data) => {
-                const assigments = [];
-                data.forEach(assigment => {
-                    if (!assigments.includes(assigment.Opdracht)) {
-                        assigments.push(assigment.Opdracht);
-                    };
-                });
-                return assigments;
-            };
-
-            const students = filterStudent(action.payload);
-            const assigments = filterAssigments(action.payload);
-            const AvverageArray = [];
-
-            const getAvverage = (data, filterNaam, filterGroep) => {
-                const filterArray = data.filter(item => item.Opdracht === filterNaam).map(item => parseInt(item[filterGroep]));
-                return filterArray.reduce((current, total) => current + total) / filterArray.length;
-            };
-
-            assigments.forEach(item => {
-                const object = {
-                    Opdracht: item,
-                    Moeilijk: getAvverage(action.payload, item, "Moeilijk"),
-                    Leuk: getAvverage(action.payload, item, "Leuk"),
-                    IsFilter: true,
-                };
-                AvverageArray.push(object);
-            });
+            const assignments = []
+            const students = []
             const dataArray = [];
-            action.payload.forEach(item => {
+
+            action.payload.forEach(data => {
+                if (!assignments.includes(data.Opdracht)) {
+                    assignments.push(data.Opdracht)
+                }
+                if (!students.includes(data.Naam)) {
+                    students.push(data.Naam)
+                }
                 const object = {
-                    Naam: item.Naam,
-                    Opdracht: item.Opdracht,
-                    Moeilijk: parseInt(item.Moeilijk),
-                    Leuk: parseInt(item.Leuk),
-                    IsFilter: true,
-                };
+                    Naam: data.Naam,
+                    Opdracht: data.Opdracht,
+                    Moeilijk: parseInt(data.Moeilijk),
+                    Leuk: parseInt(data.Leuk),
+                }
                 dataArray.push(object);
-            });
+            })
+
+            const newAssignmentArray = []
+            const studentsArray = []
+
+            students.forEach(student => {
+                const object = {
+                    Naam: student,
+                    IsFilter: true,
+                }
+                studentsArray.push(object)
+            })
+
+            assignments.forEach(assignment => {
+                const filter = dataArray.filter(item => item.Opdracht === assignment)
+                const averageDifficulty = filter.map(item => item.Moeilijk).reduce((previousValue, currentValue) => previousValue + currentValue, 0)/filter.length
+                const averageFun = filter.map(item => item.Leuk).reduce((previousValue, currentValue) => previousValue + currentValue, 0)/filter.length
+                const object = {
+                    Opdracht: assignment,
+                    Moeilijk: averageDifficulty,
+                    Leuk: averageFun,
+                    IsFilter: true,
+                }
+                newAssignmentArray.push(object)
+            })
+            console.log(newAssignmentArray)
+
             return {
                 ...state,
                 data: dataArray,
-                students: students,
-                assigments: AvverageArray,
+                students: studentsArray,
+                assignments: newAssignmentArray,
                 isLoading: false,
             };
         case "SET_STUDENT_INFO":
@@ -76,92 +68,83 @@ export default function dataReducer(state = initialState, action) {
                 ...state,
                 studentInfo: action.payload
             };
-        case "FILTER_DATA":
-            const [id, filter] = action.payload;
-            const newArrayStudents = [];
-            state.students.forEach(item => {
-                if (item.Naam === id) {
+        case "FILTER_DATA_ASSIGNMENT":
+            const assignmentName = action.payload;
+            const newArrayAssignments = []
+            state.assignments.forEach(item => {
+                if (item.Opdracht === assignmentName) {
                     const object = {
                         ...item,
                         IsFilter: !item.IsFilter,
                     };
-                    newArrayStudents.push(object)
+                    newArrayAssignments.push(object);
                 } else {
-                    newArrayStudents.push(item)
-                };
-            });
-            const newArrayAssigments = [];
-            state.assigments.forEach(item => {
-                const getAvverage = (filterName, filterGroep) => {
-                    const filterStudentArray = newArrayStudents.filter(item => item.IsFilter === true).map(item => item.Naam);
-                    const filterArray = state.data.filter(item => item.Opdracht === filterGroep).filter(item => filterStudentArray.includes(item.Naam)).map(item => item[filterName]);
-                    return Math.round((filterArray.reduce((current, total) => current + total, 0) / filterArray.length) * 10) / 10;
-                };
-                if (item.Opdracht === id) {
-                    const object = {
-                        ...item,
-                        Moeilijk: getAvverage("Moeilijk", item.Opdracht),
-                        Leuk: getAvverage("Leuk", item.Opdracht),
-                        IsFilter: !item.IsFilter,
-                    };
-                    newArrayAssigments.push(object);
-                } else {
-                    const object = {
-                        ...item,
-                        Moeilijk: getAvverage("Moeilijk", item.Opdracht),
-                        Leuk: getAvverage("Leuk", item.Opdracht),
-                    };
-                    newArrayAssigments.push(object);
-                };
-            });
-            const newDataArray = [];
-            state.data.forEach(item => {
-                if (item[filter] === id) {
-                    const object = {
-                        ...item,
-                        IsFilter: !item.IsFilter
-                    };
-                    newDataArray.push(object);
-                } else {
-                    newDataArray.push(item);
-                };
+                    newArrayAssignments.push(item)
+                }
             });
             return {
                 ...state,
-                students: newArrayStudents,
-                assigments: newArrayAssigments,
-                data: newDataArray,
+                assignments: newArrayAssignments,
             };
+            case "FILTER_DATA_STUDENTS":
+                const studentName = action.payload;
+                const filterStudentArray = [];
+            state.students.forEach(student => {
+                    if (student.Naam === studentName) {
+                        const object = {
+                            ...student,
+                            IsFilter: !student.IsFilter,
+                        };
+                        filterStudentArray.push(object)
+                    } else {
+                        filterStudentArray.push(student)
+                    };
+            });
+                return {
+                    ...state,
+                    students: filterStudentArray,
+                };
+        case "GET_AVERAGE":
+            const averageAssignments = []
+            const filterStudents = state.students.filter(student => student.IsFilter === true).map(student => student.Naam)
+            state.assignments.forEach(assignment => {
+                const filter = state.data.filter(item => item.Opdracht === assignment.Opdracht && filterStudents.includes(item.Naam))
+                const averageDifficulty = filter.map(item => item.Moeilijk).reduce((previousValue, currentValue) => previousValue + currentValue, 0) / filter.length
+                const averageFun = filter.map(item => item.Leuk).reduce((previousValue, currentValue) => previousValue + currentValue, 0) / filter.length
+                    const object = {
+                        ...assignment,
+                        Moeilijk: isNaN(averageDifficulty)   ? 0 : averageDifficulty,
+                        Leuk:   isNaN(averageFun) ? 0 : averageFun,
+                    }
+                    averageAssignments.push(object)  
+            });
+            return {
+                ...state,
+                assignments: averageAssignments,
+            };
+        
         case "SHOW_IN_GRAF":
             return {
                 ...state,
                 showInGraf: action.payload,
             };
         case "RESET_DATA":
-            const newArray = state.data.map(data => {
-                return {
-                    ...data,
-                    IsFilter: true,
-                };
-            });
-
             const studentArray = state.students.map(student => {
                 return ({
                     ...student,
                     IsFilter: true
                 });
             });
-            const assigmentArray = state.assigments.map(assigment => {
+            const assignmentArray = state.assignments.map(assignment => {
                 return ({
-                    ...assigment,
+                    ...assignment,
                     IsFilter: true
                 });
             });
             return {
                 ...state,
-                data: newArray,
                 students: studentArray,
-                assigments: assigmentArray,
+                assignments: assignmentArray,
                 showInGraf: "m-l",
                 sortBy: "",
             };

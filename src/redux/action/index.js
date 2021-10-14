@@ -12,10 +12,22 @@ export const setStudentInfo = (info) => {
     };
 };
 
-export const filterData = (data) => {
+export const filterDataAssignment = (data) => {
     return {
-        type: "FILTER_DATA",
+        type: "FILTER_DATA_ASSIGNMENT",
         payload: data
+    };
+};
+export const filterDataStudents = (data) => {
+    return {
+        type: "FILTER_DATA_STUDENTS",
+        payload: data
+    };
+};
+
+export const getAverage = () => {
+    return {
+        type: "GET_AVERAGE",
     };
 };
 

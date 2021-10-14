@@ -16,7 +16,7 @@ function Table({data}) {
 
     return (
         <div>
-            <table className="table">
+            <table className="table text-secondary">
                 <thead>
                     <tr>
                         <th scope="col">Student</th>

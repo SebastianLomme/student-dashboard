@@ -7,7 +7,6 @@ import studentInfoData from "./student-info-data.csv"
 import Header  from './components/Header';
 import Nav from "./components/Nav";
 import Home from './components/Home';
-import GrafBar from './components/GrafBar';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,25 +14,19 @@ import {
 
 } from "react-router-dom";
 import StudentInfo from './components/StudentInfo';
-import AssigmentInfo from './components/AssigmentInfo.js';
+import AssignmentInfo from './components/AssignmentInfo.js';
 
 
 function App() {
   const dispatch = useDispatch()
-  const data = useSelector(state => state.reducer.assigments)
   const loading = useSelector(state => state.reducer.isLoading)
   console.log(loading)
   useEffect(() => {
-    let isSubscribed = true
     csv(studentData).then(data => dispatch(setData(data)))
-    return () => isSubscribed = false
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
-    let isSubscribed = true
     csv(studentInfoData).then(data => dispatch(setStudentInfo(data)))
-    return () => isSubscribed = false
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
   return (
@@ -45,11 +38,8 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/grafiek">
-            <GrafBar data={data} filter={"Opdracht"} />
-          </Route>
           <Route path="/student/:name/" component={StudentInfo} />
-          <Route path="/assigment/:opdracht/" component={AssigmentInfo} />
+          <Route path="/assignment/:opdracht/" component={AssignmentInfo} />
         </Switch>
       </div>
     </Router>

@@ -4,13 +4,13 @@ import SortFilterNav from './SortFilterNav';
 import SortFunction from './SortFunction';
 
 function Home() {
-    const assigments = useSelector(state => state.reducer.assigments);
+    const assignments = useSelector(state => state.reducer.assignments);
     const data = useSelector(state => state.reducer.data);
 
     return (
         <div className="container bg-light">
             <SortFilterNav />
-            <SortFunction assigments={assigments} data={data} filter="Opdracht" />
+            <SortFunction assignments={assignments} data={data} filter="Opdracht" />
         </div>
     );
 };
