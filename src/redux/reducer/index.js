@@ -44,8 +44,8 @@ export default function dataReducer(state = initialState, action) {
 
             assignments.forEach(assignment => {
                 const filter = dataArray.filter(item => item.Opdracht === assignment)
-                const averageDifficulty = filter.map(item => item.Moeilijk).reduce((previousValue, currentValue) => previousValue + currentValue, 0)/filter.length
-                const averageFun = filter.map(item => item.Leuk).reduce((previousValue, currentValue) => previousValue + currentValue, 0)/filter.length
+                const averageDifficulty = filter.map(item => item.Moeilijk).reduce((previousValue, currentValue) => previousValue + currentValue, 0) / filter.length
+                const averageFun = filter.map(item => item.Leuk).reduce((previousValue, currentValue) => previousValue + currentValue, 0) / filter.length
                 const object = {
                     Opdracht: assignment,
                     Moeilijk: averageDifficulty,
@@ -53,8 +53,7 @@ export default function dataReducer(state = initialState, action) {
                     IsFilter: true,
                 }
                 newAssignmentArray.push(object)
-            })
-            console.log(newAssignmentArray)
+            });
 
             return {
                 ...state,

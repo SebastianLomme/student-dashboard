@@ -20,7 +20,7 @@ function Nav() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container-fluid  ">
-                <Link className="navbar-brand" to="/">Navbar</Link>
+                <Link className="navbar-brand" to="/"> Winc Academy </Link>
                 <div className="dropdown  ms-auto pe-2">
                     <button
                         className="btn btn-secondary dropdown-toggle"

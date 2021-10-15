@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setData, setStudentInfo } from './redux/action';
 import { csv } from "d3";
 import studentData from "./student-dashboard-data.csv";
@@ -19,8 +19,6 @@ import AssignmentInfo from './components/AssignmentInfo.js';
 
 function App() {
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.reducer.isLoading)
-  console.log(loading)
   useEffect(() => {
     csv(studentData).then(data => dispatch(setData(data)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,6 +42,6 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 export default App;

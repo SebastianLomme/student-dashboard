@@ -28,8 +28,6 @@ function GrafLine(props) {
         default: newData = data
     }
 
-
-console.log("newData: ",newData)
     return (
         <div className="chart">
             <VictoryChart
