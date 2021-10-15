@@ -5,8 +5,7 @@ import {
     VictoryChart, 
     VictoryAxis, 
     VictoryGroup, 
-    VictoryVoronoiContainer, 
-    // VictoryTooltip, 
+    VictoryVoronoiContainer,
     VictoryLegend,
 } from 'victory';
 
@@ -50,17 +49,10 @@ function GrafBar(props) {
                 />
                 <VictoryGroup
                     offset={number}
-                    // animate={{
-                    //     duration: 2000,
-                    //     onLoad: { duration: 1000 }
-                    // }}
                 >
                     {showInGraf.includes("m") ?
                         <VictoryBar
-                            // labelComponent={<VictoryTooltip />}
-                            // labels={newData.map(avg => {
-                            //     return `Moeilijkheid: ${avg.Moeilijk}`
-                            // })}
+
                             color={"#CB997E"}
                             barWidth={number}
                             data={newData}
@@ -73,10 +65,6 @@ function GrafBar(props) {
                     }
                     {showInGraf.includes("l") ?
                         <VictoryBar
-                            // labelComponent={<VictoryTooltip />}
-                            // labels={newData.map(avg => {
-                            //     return `Leuk: ${avg.Leuk}`
-                            // })}
                             color={"#6B705C"}
                             barWidth={number}
                             data={newData}

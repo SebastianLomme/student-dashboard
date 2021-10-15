@@ -5,7 +5,6 @@ import {
     VictoryChart, 
     VictoryAxis, 
     VictoryVoronoiContainer, 
-    VictoryTooltip, 
     VictoryLegend,
 } from 'victory';
 
@@ -36,10 +35,6 @@ function GrafLine(props) {
                         height={400}
                     />
                 }
-                // animate={{
-                //     duration: 2000,
-                //     onLoad: { duration: 1000 }
-                // }}
             >
                 <VictoryLegend x={250} y={0}
                     orientation="horizontal"
@@ -51,39 +46,23 @@ function GrafLine(props) {
                 />
                 {showInGraf.includes("m") ?
                     <VictoryLine
-                        labelComponent={<VictoryTooltip />}
-                        labels={data.map(avg => {
-                            return `Moeilijkheid: ${avg.Moeilijk}`
-                        })}
                         style={{ data: { stroke: "#CB997E", strokeWidth: 2, } }}
                         data={newData}
                         tickValues={[0, 1, 2, 3, 4, 5]}
                         tickFormat={newData.map(avg => avg[filter])}
                         x={filter}
                         y="Moeilijk"
-                        // animate={{
-                        //     duration: 2000,
-                        //     onLoad: { duration: 1000 }
-                        // }}
                     />
                     : null
                 }
                 {showInGraf.includes("l") ?
                     <VictoryLine
-                        // labelComponent={<VictoryTooltip />}
-                        // labels={data.map(avg => {
-                        //     return `Leuk: ${avg.Leuk}`
-                        // })}
                         style={{ data: { stroke: "#6B705C", strokeWidth: 2, } }}
                         data={newData}
                         tickValues={[0, 1, 2, 3, 4, 5]}
                         tickFormat={newData.map(avg => avg[filter])}
                         x={filter}
                         y="Leuk"
-                        // animate={{
-                        //     duration: 2000,
-                        //     onLoad: { duration: 1000 }
-                        // }}
                     />
                     : null
                 }
